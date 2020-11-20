@@ -1,9 +1,6 @@
-from rx import of
+from rx import of, operators as op
 
 source = of("Alpha", "Beta", "Gamma", "Delta", "Epsilon")
 
-source.subscribe(
-    on_next=lambda i: print("Received {0}".format(i)),
-    on_error=lambda e: print("Error Occurred: {0}".format(e)),
-    on_completed=lambda: print("Done!"),
-)
+composed = source.pipe(op.map(lambda s: len(s)), op.filter(lambda i: i >= 5))
+composed.subscribe(lambda value: print("Received {0}".format(value)))
