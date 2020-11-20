@@ -1,6 +1,14 @@
-from rx import of, operators as op
+import rx
+from rx import of, operators as ops
 
-of("Alpha", "Beta", "Gamma", "Delta", "Epsilon").pipe(
-    op.map(lambda s: len(s)),
-    op.filter(lambda i: i >= 5)
-).subscribe(lambda value: print("Received {0}".format(value)))
+
+def length_less_than_5():
+    return rx.pipe(
+        ops.map(lambda s: len(s)),
+        ops.filter(lambda i: i >= 5),
+    )
+
+
+of("Alpha", "Beta", "Gamma", "Delta",
+   "Epsilon").pipe(length_less_than_5()).subscribe(
+       lambda value: print("Received {0}".format(value)))
